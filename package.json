@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "commit": "cz"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "commitizen": "^4.3.0",
     "nodemon": "^2.0.9"
   }
 }
