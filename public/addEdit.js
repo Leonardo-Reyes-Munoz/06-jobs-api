@@ -71,6 +71,7 @@ export const handleAddEdit = () => {
     }
   });
 };
+
 export const showAddEdit = async (jobId) => {
   if (!jobId) {
     company.value = '';

@@ -20,7 +20,7 @@ export const handleJobs = () => {
   jobsTable = document.getElementById('jobs-table');
   jobsTableHeader = document.getElementById('jobs-table-header');
 
-  jobsDiv.addEventListener('click', (e) => {
+  jobsDiv.addEventListener('click', async (e) => {
     if (inputEnabled && e.target.nodeName === 'BUTTON') {
       if (e.target === addJob) {
         showAddEdit(null);
@@ -34,6 +34,33 @@ export const handleJobs = () => {
       } else if (e.target.classList.contains('editButton')) {
         message.textContent = '';
         showAddEdit(e.target.dataset.id);
+      } else if (e.target.classList.contains('deleteButton')) {
+        let method = 'DELETE';
+        let url = `/api/v1/jobs/${e.target.dataset.id}`;
+
+        try {
+          const response = await fetch(url, {
+            method: method,
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const data = await response.json();
+          if (response.status === 200 || response.status === 201) {
+            if (response.status === 200) {
+              // a 200 is expected for a successful update
+              message.textContent = 'Selected job has been deleted';
+              showJobs();
+            } else {
+              message.textContent = data.msg;
+            }
+          }
+        } catch (err) {
+          console.log(err);
+          message.textContent = 'A communication error occurred.';
+        }
       }
     }
   });
